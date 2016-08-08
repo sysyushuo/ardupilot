@@ -51,8 +51,11 @@ public:
 
     virtual void broadcast_configuration_failure_reason(void) const { return ; }
 
+<<<<<<< HEAD
     virtual void handle_msg(mavlink_message_t *msg) { return ; }
 
+=======
+>>>>>>> ArduPlane-release
 protected:
     AP_HAL::UARTDriver *port;           ///< UART we are attached to
     AP_GPS &gps;                        ///< access to frontend (for parameters)

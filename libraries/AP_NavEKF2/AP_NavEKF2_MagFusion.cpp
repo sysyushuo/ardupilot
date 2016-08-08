@@ -32,6 +32,7 @@ void NavEKF2_core::controlMagYawReset()
         gpsYawResetRequest = false;
     }
 
+<<<<<<< HEAD
     // Quaternion and delta rotation vector that are re-used for different calculations
     Vector3f deltaRotVecTemp;
     Quaternion deltaQuatTemp;
@@ -52,6 +53,13 @@ void NavEKF2_core::controlMagYawReset()
         initialResetAllowed = angRateOK;
         flightResetAllowed = angRateOK && !onGround;
 
+=======
+    // In-Flight reset for vehicles that can use a zero sideslip assumption (Planes)
+    // this is done to protect against unrecoverable heading alignment errors due to compass faults
+    if (!firstMagYawInit && assume_zero_sideslip() && inFlight) {
+        alignYawGPS();
+        firstMagYawInit = true;
+>>>>>>> ArduPlane-release
     }
 
     // Check if conditions for a interim or final yaw/mag reset are met
@@ -157,8 +165,13 @@ void NavEKF2_core::realignYawGPS()
         // Check the yaw angles for consistency
         float yawErr = MAX(fabsf(wrap_PI(gpsYaw - velYaw)),fabsf(wrap_PI(gpsYaw - eulerAngles.z)));
 
+<<<<<<< HEAD
         // If the angles disagree by more than 45 degrees and GPS innovations are large or no previous yaw alignment, we declare the magnetic yaw as bad
         badMagYaw = ((yawErr > 0.7854f) && (velTestRatio > 1.0f) && (PV_AidingMode == AID_ABSOLUTE)) || !yawAlignComplete;
+=======
+        // If the angles disagree by more than 45 degrees and GPS innovations are large or no compass, we declare the magnetic yaw as bad
+        badMagYaw = ((yawErr > 0.7854f) && (velTestRatio > 1.0f)) || !use_compass();
+>>>>>>> ArduPlane-release
 
         // correct yaw angle using GPS ground course if compass yaw bad
         if (badMagYaw) {
@@ -190,6 +203,21 @@ void NavEKF2_core::realignYawGPS()
             }
         }
     }
+<<<<<<< HEAD
+=======
+    // reset the magnetometer field states - we could have got bad external interference when initialising on-ground
+    calcQuatAndFieldStates(eulerAngles.x, eulerAngles.y);
+
+    // if we are not using a magnetometer, then the yaw gyro bias value will be invalid at this point and the
+    // state variance should be reset
+    if (!use_compass()) {
+        P[11][11] = sq(radians(InitialGyroBiasUncertainty() * dtEkfAvg));
+    }
+
+    // We shoud retry the primary magnetometer if previously switched or failed
+    magSelectIndex = 0;
+    allMagSensorsFailed = false;
+>>>>>>> ArduPlane-release
 }
 
 /********************************************************
@@ -263,6 +291,7 @@ void NavEKF2_core::SelectMagFusion()
             magTestRatio.zero();
             yawTestRatio = 0.0f;
             lastSynthYawTime_ms = imuSampleTime_ms;
+<<<<<<< HEAD
         }
     }
 
@@ -282,6 +311,14 @@ void NavEKF2_core::SelectMagFusion()
         bodyMagFieldVar.z = P[21][21];
     }
 
+=======
+        } else {
+            // Control reset of yaw and magnetic field states
+            controlMagYawReset();
+        }
+    }
+
+>>>>>>> ArduPlane-release
     // stop performance timer
     hal.util->perf_end(_perf_FuseMagnetometer);
 }
@@ -820,9 +857,14 @@ void NavEKF2_core::fuseEulerYaw()
 
     // Use the difference between the horizontal projection and declination to give the measured yaw
     // If we can't use compass data, set the  meaurement to the predicted
+<<<<<<< HEAD
     // to prevent uncontrolled variance growth whilst on ground without magnetometer
     float measured_yaw;
     if (use_compass() && yawAlignComplete && magStateInitComplete) {
+=======
+    float measured_yaw;
+    if (use_compass()) {
+>>>>>>> ArduPlane-release
         measured_yaw = wrap_PI(-atan2f(magMeasNED.y, magMeasNED.x) + _ahrs->get_compass()->get_declination());
     } else {
         measured_yaw = predicted_yaw;

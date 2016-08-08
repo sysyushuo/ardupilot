@@ -322,8 +322,13 @@ bool AP_GPS_NMEA::_term_complete()
                     break;
                 case _GPS_SENTENCE_VTG:
                     _last_VTG_ms = now;
+<<<<<<< HEAD
                     state.ground_speed  = _new_speed*0.01f;
                     state.ground_course = wrap_360(_new_course*0.01f);
+=======
+                    state.ground_speed     = _new_speed*0.01f;
+                    state.ground_course_cd = wrap_360_cd(_new_course);
+>>>>>>> ArduPlane-release
                     fill_3d_velocity();
                     // VTG has no fix indicator, can't change fix status
                     break;
@@ -390,14 +395,22 @@ bool AP_GPS_NMEA::_term_complete()
             _new_satellite_count = atol(_term);
             break;
         case _GPS_SENTENCE_GGA + 8: // HDOP (GGA)
+<<<<<<< HEAD
             _new_hdop = (uint16_t)_parse_decimal_100(_term);
+=======
+            _new_hdop = _parse_decimal_100();
+>>>>>>> ArduPlane-release
             break;
 
         // time and date
         //
         case _GPS_SENTENCE_RMC + 1: // Time (RMC)
         case _GPS_SENTENCE_GGA + 1: // Time (GGA)
+<<<<<<< HEAD
             _new_time = _parse_decimal_100(_term);
+=======
+            _new_time = _parse_decimal_100();
+>>>>>>> ArduPlane-release
             break;
         case _GPS_SENTENCE_RMC + 9: // Date (GPRMC)
             _new_date = atol(_term);
@@ -424,18 +437,30 @@ bool AP_GPS_NMEA::_term_complete()
                 _new_longitude = -_new_longitude;
             break;
         case _GPS_SENTENCE_GGA + 9: // Altitude (GPGGA)
+<<<<<<< HEAD
             _new_altitude = _parse_decimal_100(_term);
+=======
+            _new_altitude = _parse_decimal_100();
+>>>>>>> ArduPlane-release
             break;
 
         // course and speed
         //
         case _GPS_SENTENCE_RMC + 7: // Speed (GPRMC)
         case _GPS_SENTENCE_VTG + 5: // Speed (VTG)
+<<<<<<< HEAD
             _new_speed = (_parse_decimal_100(_term) * 514) / 1000;       // knots-> m/sec, approximiates * 0.514
             break;
         case _GPS_SENTENCE_RMC + 8: // Course (GPRMC)
         case _GPS_SENTENCE_VTG + 1: // Course (VTG)
             _new_course = _parse_decimal_100(_term);
+=======
+            _new_speed = (_parse_decimal_100() * 514) / 1000;       // knots-> m/sec, approximiates * 0.514
+            break;
+        case _GPS_SENTENCE_RMC + 8: // Course (GPRMC)
+        case _GPS_SENTENCE_VTG + 1: // Course (VTG)
+            _new_course = _parse_decimal_100();
+>>>>>>> ArduPlane-release
             break;
         }
     }

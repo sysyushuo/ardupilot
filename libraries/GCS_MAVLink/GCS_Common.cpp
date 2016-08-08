@@ -1299,7 +1299,11 @@ void GCS_MAVLINK::send_statustext_all(MAV_SEVERITY severity, const char *fmt, ..
     hal.util->vsnprintf((char *)text, sizeof(text)-1, fmt, arg_list);
     va_end(arg_list);
     text[MAVLINK_MSG_STATUSTEXT_FIELD_TEXT_LEN] = 0;
+<<<<<<< HEAD
     send_statustext(severity, mavlink_active | chan_is_streaming, text);
+=======
+    send_statustext(severity, mavlink_active, text);
+>>>>>>> ArduPlane-release
 }
 
 /*
