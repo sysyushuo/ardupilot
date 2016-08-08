@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Release 3.5.3, 30th April 2016
 ------------------------------
 
@@ -248,6 +249,8 @@ code, and also contributing a great deal of their own
 improvements. Thanks!
 
 
+=======
+>>>>>>> ArduPilot/ArduPlane-release-AVR
 Release 3.4.0, 24th September 2015
 ----------------------------------
 

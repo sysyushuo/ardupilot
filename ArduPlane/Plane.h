@@ -4,6 +4,10 @@
 #define THISFIRMWARE "ArduPlane V3.5.3"
 #define FIRMWARE_VERSION 3,5,3,FIRMWARE_VERSION_TYPE_OFFICIAL
 
+<<<<<<< HEAD
+=======
+#define THISFIRMWARE "ArduPlane V3.4.0"
+>>>>>>> ArduPilot/ArduPlane-release-AVR
 /*
    Lead developer: Andrew Tridgell
  

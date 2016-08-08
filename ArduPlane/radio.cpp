@@ -67,7 +67,11 @@ void Plane::init_rc_out()
       configuration error where the user sets CH3_TRIM incorrectly and
       the motor may start on power up
      */
+<<<<<<< HEAD
     channel_throttle->radio_trim = throttle_min();
+=======
+    channel_throttle->radio_trim = channel_throttle->get_reverse() ? channel_throttle->radio_max : channel_throttle->radio_min;
+>>>>>>> ArduPilot/ArduPlane-release-AVR
     
     if (arming.arming_required() != AP_Arming::YES_ZERO_PWM) {
         channel_throttle->enable_out();

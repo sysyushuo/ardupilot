@@ -170,12 +170,19 @@ void Plane::init_ardupilot()
     if (g.compass_enabled==true) {
         bool compass_ok = compass.init() && compass.read();
 #if HIL_SUPPORT
+<<<<<<< HEAD
     if (!is_zero(g.hil_mode)) {
         compass_ok = true;
     }
 #endif
         if (!compass_ok) {
             cliSerial->println("Compass initialisation failed!");
+=======
+        compass_ok = true;
+#endif
+        if (!compass_ok) {
+            cliSerial->println_P(PSTR("Compass initialisation failed!"));
+>>>>>>> ArduPilot/ArduPlane-release-AVR
             g.compass_enabled = false;
         } else {
             ahrs.set_compass(&compass);

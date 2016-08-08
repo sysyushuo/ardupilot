@@ -362,7 +362,11 @@ void Plane::Log_Write_Sonar()
 
     struct log_Sonar pkt = {
         LOG_PACKET_HEADER_INIT(LOG_SONAR_MSG),
+<<<<<<< HEAD
         time_us     : AP_HAL::micros64(),
+=======
+        time_us     : hal.scheduler->micros64(),
+>>>>>>> ArduPilot/ArduPlane-release-AVR
         distance    : distance,
         voltage     : rangefinder.voltage_mv()*0.001f,
         baro_alt    : barometer.get_altitude(),
@@ -493,7 +497,11 @@ static const struct LogStructure log_structure[] = {
     { LOG_NTUN_MSG, sizeof(log_Nav_Tuning),         
       "NTUN", "QCfccccfIf",  "TimeUS,Yaw,WpDist,TargBrg,NavBrg,AltErr,Arspd,Alt,GSpdCM,XT" },
     { LOG_SONAR_MSG, sizeof(log_Sonar),             
+<<<<<<< HEAD
       "SONR", "QHfffbBf",   "TimeUS,DistCM,Volt,BaroAlt,GSpd,Thr,Cnt,Corr" },
+=======
+      "SONR", "QHfffBBf",   "TimeUS,DistCM,Volt,BaroAlt,GSpd,Thr,Cnt,Corr" },
+>>>>>>> ArduPilot/ArduPlane-release-AVR
     { LOG_ARM_DISARM_MSG, sizeof(log_Arm_Disarm),
       "ARM", "QBH", "TimeUS,ArmState,ArmChecks" },
     { LOG_ATRP_MSG, sizeof(AP_AutoTune::log_ATRP),
